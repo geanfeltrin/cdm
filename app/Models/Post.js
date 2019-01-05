@@ -4,10 +4,9 @@
 const Model = use('Model')
 
 class Post extends Model {
-  category () {
+  categories () {
     return this.belongsTo('App/Models/Category')
   }
-
   file () {
     return this.belongsTo('App/Models/File')
   }

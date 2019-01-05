@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class SubCategory extends Model {
-  category () {
+  categories () {
     return this.belongsTo('App/Models/Category')
   }
 }

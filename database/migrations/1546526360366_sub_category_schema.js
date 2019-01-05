@@ -7,7 +7,7 @@ class SubCategorySchema extends Schema {
     this.create('sub_categories', table => {
       table.increments()
       table
-        .integer('categories_id')
+        .integer('category_id')
         .unsigned()
         .notNullable()
         .references('id')
