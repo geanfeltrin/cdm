@@ -4,48 +4,30 @@ const Category = use('App/Models/Category')
 
 class CategoryController {
   async index () {
-    const category = await Category.query()
-      .with('subcategories')
-      .fetch()
+    const category = await Category.all()
 
     return category
   }
 
   async store ({ request }) {
-    const { subcategories, ...data } = request.only([
-      'name',
-      'slug',
-      'description',
-      'subcategories'
-    ])
+    const data = request.only(['name', 'slug', 'description'])
 
     const category = await Category.create(data)
 
     return category
   }
 
-  async show ({ params, request, response, view }) {}
+  async update ({ params, request }) {
+    const data = request.only(['name', 'slug', 'description'])
 
-  /**
-   * Render a form to update an existing category.
-   * GET categories/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {}
+    const category = await Category.findOrFail(params.id)
 
-  /**
-   * Update category details.
-   * PUT or PATCH categories/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {}
+    category.merge(data)
+
+    await category.save()
+
+    return category
+  }
 
   /**
    * Delete a category with id.
@@ -55,7 +37,11 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {}
+  async destroy ({ params }) {
+    const category = await Category.findOrFail(params.id)
+
+    await category.delete()
+  }
 }
 
 module.exports = CategoryController

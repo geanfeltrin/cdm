@@ -4,89 +4,65 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with posts
- */
+const Post = use('App/Models/Post')
+
 class PostController {
-  /**
-   * Show a list of all posts.
-   * GET posts
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    const post = await Post.query()
+      .with('users')
+      .with('subcategories')
+      .with('file')
+      .fetch()
+
+    return post
   }
 
-  /**
-   * Render a form to be used for creating a new post.
-   * GET posts/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request, auth }) {
+    const data = request.only([
+      'title',
+      'description',
+      'url',
+      'sub_category_id',
+      'file_id'
+    ])
+
+    const post = await Post.create({ ...data, user_id: auth.user.id })
+
+    await post.loadMany(['file', 'subcategories'])
+
+    return post
   }
 
-  /**
-   * Create/save a new post.
-   * POST posts
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single post.
-   * GET posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    const post = Post.findOrFail(params.id)
+
+    return post
   }
 
-  /**
-   * Render a form to update an existing post.
-   * GET posts/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.only([
+      'title',
+      'description',
+      'url',
+      'sub_category_id',
+      'file_id'
+    ])
+
+    const post = await Post.findOrFail(params.id)
+
+    post.merge(data)
+
+    await post.save()
+
+    await post.loadMany(['file', 'subcategories'])
+
+    return post
   }
 
-  /**
-   * Update post details.
-   * PUT or PATCH posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
+  async destroy ({ params }) {
+    const post = await Post.findOrFail(params.id)
 
-  /**
-   * Delete a post with id.
-   * DELETE posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await post.delete()
   }
 }
 

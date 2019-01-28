@@ -35,4 +35,9 @@ Route.group(() => {
   Route.resource('permissions', 'PermissionController').apiOnly()
 
   Route.resource('roles', 'RoleController').apiOnly()
+
+  Route.resource('category', 'CategoryController').apiOnly()
+  Route.resource('subcategory', 'SubCategoryController').apiOnly()
+
+  Route.resource('post', 'PostController').apiOnly()
 }).middleware(['auth'])

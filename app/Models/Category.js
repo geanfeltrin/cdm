@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Category extends Model {
-  subCategory () {
+  subCategories () {
     return this.hasMany('App/Models/SubCategory')
   }
   posts () {

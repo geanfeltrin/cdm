@@ -21,10 +21,10 @@ class PostSchema extends Schema {
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
       table
-        .integer('category_id')
+        .integer('sub_category_id')
         .unsigned()
         .references('id')
-        .inTable('categories')
+        .inTable('sub_categories')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
 

@@ -22,6 +22,9 @@ class User extends Model {
       '@provider:Adonis/Acl/HasPermission'
     ]
   }
+  static get hidden () {
+    return ['password']
+  }
   tokens () {
     return this.hasMany('App/Models/Token')
   }
