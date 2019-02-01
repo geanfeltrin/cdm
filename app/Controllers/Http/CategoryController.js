@@ -4,7 +4,7 @@ const Category = use('App/Models/Category')
 
 class CategoryController {
   async index () {
-    const category = await Category.all()
+    const category = await Category.query().with('subCategories').fetch()
 
     return category
   }
