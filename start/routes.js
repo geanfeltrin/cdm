@@ -30,8 +30,6 @@ Route.group(() => {
 
   Route.post('/files', 'FileController.store')
 
-  Route.resource('projects', 'ProjectController').apiOnly()
-
   Route.resource('permissions', 'PermissionController').apiOnly()
 
   Route.resource('roles', 'RoleController').apiOnly()
