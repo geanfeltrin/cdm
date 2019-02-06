@@ -3,6 +3,15 @@
 const User = use('App/Models/User')
 
 class UserController {
+  async index () {
+    const user = await User.query()
+      .with('roles')
+      .with('permissions')
+      .fetch()
+
+    return user
+  }
+
   async store ({ request }) {
     const { permissions, roles, ...data } = request.only([
       'username',
