@@ -7,14 +7,17 @@
 const Post = use('App/Models/Post')
 
 class PostController {
-  async index () {
-    const post = await Post.query()
-      .with('users')
-      .with('subcategories')
-      .with('file')
-      .fetch()
+  async index ({ auth }) {
+    const user = await auth.getUser()
+    if (user.can('read_private_post')) {
+      const post = await Post.query()
+        .with('users')
+        .with('subcategories')
+        .with('file')
+        .fetch()
 
-    return post
+      return post
+    }
   }
 
   async store ({ request, auth }) {
