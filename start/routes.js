@@ -16,7 +16,8 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.post('users', 'UserController.store')
+Route.post('users', 'UserController.store').middleware(['auth'])
+
 Route.post('sessions', 'SessionController.store')
 
 Route.post('passwords', 'ForgotPasswordController.store')
@@ -24,17 +25,27 @@ Route.put('passwords', 'ForgotPasswordController.Update')
 
 Route.get('/files/:id', 'FileController.show')
 
-Route.group(() => {
-  Route.resource('users', 'UserController').apiOnly()
+// all
 
+Route.get('category', 'CategoryController.index').middleware(['auth'])
+Route.get('subcategory', 'SubCategoryController.index').middleware(['auth'])
+Route.get('post', 'PostController.index').middleware(['auth'])
+
+// // Only Administrator
+Route.group(() => {
   Route.post('/files', 'FileController.store')
 
+  Route.resource('category', 'CategoryController')
+    .apiOnly()
+    .except(['get'])
+  Route.resource('subcategory', 'SubCategoryController')
+    .apiOnly()
+    .except(['get'])
+  Route.resource('post', 'PostController')
+    .except(['get'])
+    .apiOnly()
+
   Route.resource('permissions', 'PermissionController').apiOnly()
-
   Route.resource('roles', 'RoleController').apiOnly()
-
-  Route.resource('category', 'CategoryController').apiOnly()
-  Route.resource('subcategory', 'SubCategoryController').apiOnly()
-
-  Route.resource('post', 'PostController').apiOnly()
-}).middleware(['auth'])
+  Route.get('users', 'UserController.index')
+}).middleware(['auth', 'is:(administrator || moderador)'])
