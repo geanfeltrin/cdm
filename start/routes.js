@@ -16,9 +16,10 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.post('users', 'UserController.store').middleware(['auth'])
+Route.post('users', 'UserController.store')
 
 Route.post('sessions', 'SessionController.store')
+Route.get('sessions', 'SessionController.index').middleware(['auth'])
 
 Route.post('passwords', 'ForgotPasswordController.store')
 Route.put('passwords', 'ForgotPasswordController.Update')
@@ -35,7 +36,9 @@ Route.group(() => {
   Route.resource('permissions', 'PermissionController').apiOnly()
 
   Route.resource('roles', 'RoleController').apiOnly()
-  Route.resource('users', 'UserController').apiOnly()
+  Route.resource('users', 'UserController')
+    .apiOnly()
+    .except(['post'])
 
   Route.post('/files', 'FileController.store')
 
