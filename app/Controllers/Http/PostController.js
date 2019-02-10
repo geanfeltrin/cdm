@@ -32,7 +32,9 @@ class PostController {
       'description',
       'url',
       'sub_category_id',
-      'file_id'
+      'file_id',
+      'imagem',
+      'type'
     ])
 
     const post = await Post.create({ ...data, user_id: auth.user.id })
@@ -54,7 +56,9 @@ class PostController {
       'description',
       'url',
       'sub_category_id',
-      'file_id'
+      'file_id',
+      'imagem',
+      'type'
     ])
 
     const post = await Post.findOrFail(params.id)

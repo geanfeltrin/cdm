@@ -33,23 +33,22 @@ Route.get('post', 'PostController.index').middleware(['auth'])
 
 // Only admin
 Route.group(() => {
-  Route.resource('permissions', 'PermissionController').apiOnly()
-
-  Route.resource('roles', 'RoleController').apiOnly()
-  Route.resource('users', 'UserController')
-    .apiOnly()
-    .except(['post'])
-
   Route.post('/files', 'FileController.store')
 
   Route.resource('category', 'CategoryController')
     .apiOnly()
-    .except(['get'])
+    .except(['index', 'show'])
   Route.resource('subcategory', 'SubCategoryController')
     .apiOnly()
-    .except(['get'])
+    .except(['index', 'show'])
 
   Route.resource('post', 'PostController')
     .apiOnly()
-    .except(['get'])
+    .except(['index', 'show'])
+
+  Route.resource('roles', 'RoleController').apiOnly()
+  Route.resource('users', 'UserController')
+    .apiOnly()
+    .except(['store'])
+  Route.resource('permissions', 'PermissionController').apiOnly()
 }).middleware(['auth', 'is:(administrator || moderator)'])
