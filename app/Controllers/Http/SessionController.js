@@ -1,6 +1,12 @@
 'use strict'
 
+
 class SessionController {
+  async index ({ auth }) {
+    const user = await auth.getUser()
+    const roles = await user.getRoles()
+    return roles
+  }
   async store ({ request, response, auth }) {
     const { email, password } = request.all()
 

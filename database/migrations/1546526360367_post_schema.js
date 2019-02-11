@@ -31,11 +31,8 @@ class PostSchema extends Schema {
       table.string('title').notNullable()
       table.string('description').notNullable()
       table.string('url').notNullable()
-      table.string('img').notNullable()
-      table
-        .string('type', 20)
-        .defaultTo('public')
-        .notNullable()
+      table.string('imagem')
+      table.string('type').defaultTo('public')
       table.timestamps()
     })
   }

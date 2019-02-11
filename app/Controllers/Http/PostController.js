@@ -9,8 +9,7 @@ const Post = use('App/Models/Post')
 class PostController {
   async index ({ auth }) {
     const user = await auth.getUser()
-
-    if (user.can('read_private_post')) {
+    if (user.is('administrator || moderator')) {
       const post = await Post.query()
         .with('subcategories')
         .with('file')
@@ -18,12 +17,12 @@ class PostController {
 
       return post
     }
-    const posts = await Post.query()
+    const post = await Post.query()
       .where({ type: 'public' })
       .with('subcategories')
       .fetch()
 
-    return posts
+    return post
   }
 
   async store ({ request, auth }) {
@@ -32,7 +31,9 @@ class PostController {
       'description',
       'url',
       'sub_category_id',
-      'file_id'
+      'file_id',
+      'imagem',
+      'type'
     ])
 
     const post = await Post.create({ ...data, user_id: auth.user.id })
@@ -54,7 +55,9 @@ class PostController {
       'description',
       'url',
       'sub_category_id',
-      'file_id'
+      'file_id',
+      'imagem',
+      'type'
     ])
 
     const post = await Post.findOrFail(params.id)
