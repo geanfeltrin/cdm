@@ -47,8 +47,10 @@ Route.group(() => {
     .except(['index', 'show'])
 
   Route.resource('roles', 'RoleController').apiOnly()
+
   Route.resource('users', 'UserController')
     .apiOnly()
     .except(['store'])
+
   Route.resource('permissions', 'PermissionController').apiOnly()
 }).middleware(['auth', 'is:(administrator || moderator)'])
