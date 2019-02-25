@@ -34,6 +34,9 @@ Route.get('post', 'PostController.index').middleware(['auth'])
 // Only admin
 Route.group(() => {
   Route.post('/files', 'FileController.store')
+  Route.resource('/files', 'FileController')
+    .apiOnly()
+    .except(['index', 'show'])
 
   Route.resource('category', 'CategoryController')
     .apiOnly()
