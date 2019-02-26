@@ -44,7 +44,6 @@ Route.group(() => {
   Route.resource('subcategory', 'SubCategoryController')
     .apiOnly()
     .except(['index', 'show'])
-
   Route.resource('post', 'PostController')
     .apiOnly()
     .except(['index', 'show'])
