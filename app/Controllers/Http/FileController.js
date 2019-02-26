@@ -47,7 +47,7 @@ class FileController {
     }
   }
 
-  async destroy ({ params }) {
+  async destroy ({ params, response }) {
     const file = await File.findOrFail(params.id)
 
     try {
@@ -57,7 +57,9 @@ class FileController {
 
       await file.delete()
     } catch (error) {
-      console.log(error)
+      return response
+        .status(error.status)
+        .send({ error: { message: 'Erro ao delatar o arquivo' } })
     }
   }
 }
