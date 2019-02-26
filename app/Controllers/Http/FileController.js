@@ -2,6 +2,9 @@
 
 const File = use('App/Models/File')
 const Helpers = use('Helpers')
+const fs = require('fs')
+const path = require('path')
+const { promisify } = require('util')
 
 /**
  * Resourceful controller for interacting with files
@@ -47,7 +50,15 @@ class FileController {
   async destroy ({ params }) {
     const file = await File.findOrFail(params.id)
 
-    await file.delete()
+    try {
+      promisify(fs.unlink)(
+        path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', file.file)
+      )
+
+      await file.delete()
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
