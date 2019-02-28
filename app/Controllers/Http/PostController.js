@@ -5,6 +5,10 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Post = use('App/Models/Post')
+const File = use('App/Models/File')
+const fs = require('fs')
+const path = require('path')
+const { promisify } = require('util')
 
 class PostController {
   async index ({ auth }) {
@@ -71,10 +75,25 @@ class PostController {
     return post
   }
 
-  async destroy ({ params }) {
+  async destroy ({ params, response }) {
     const post = await Post.findOrFail(params.id)
 
-    await post.delete()
+    console.log(post.file_id)
+    if (post.file_id) {
+      const file = await File.findOrFail(post.file_id)
+      console.log('sadas', file.file)
+      try {
+        promisify(fs.unlink)(
+          path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', file.file)
+        )
+        await file.delete()
+        await post.delete()
+      } catch (error) {
+        return response
+          .status(error.status)
+          .send({ error: { message: 'Erro ao delatar o arquivo' } })
+      }
+    }
   }
 }
 
