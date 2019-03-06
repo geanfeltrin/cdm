@@ -22,6 +22,7 @@ class PostSchema extends Schema {
         .onDelete('SET NULL')
       table
         .integer('sub_category_id')
+        .notNullable()
         .unsigned()
         .references('id')
         .inTable('sub_categories')
