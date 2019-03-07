@@ -48,7 +48,9 @@ Route.group(() => {
     .apiOnly()
     .except(['index', 'show'])
   Route.resource('roles', 'RoleController').apiOnly()
+
   Route.resource('permissions', 'PermissionController').apiOnly()
+
   Route.resource('users', 'UserController')
     .apiOnly()
     .except(['store'])
