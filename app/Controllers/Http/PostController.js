@@ -96,6 +96,7 @@ class PostController {
           .send({ error: { message: 'Erro ao delatar o arquivo' } })
       }
     }
+    await post.delete()
   }
 }
 
