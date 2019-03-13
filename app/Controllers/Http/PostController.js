@@ -15,6 +15,7 @@ class PostController {
     const user = await auth.getUser()
     if (user.is('administrator || moderator')) {
       const post = await Post.query()
+        .orderBy('id', 'desc')
         .with('subcategories')
         .with('file')
         .fetch()
@@ -23,6 +24,7 @@ class PostController {
     }
     const post = await Post.query()
       .where({ type: 'public' })
+      .orderBy('id', 'desc')
       .with('subcategories')
       .fetch()
 
