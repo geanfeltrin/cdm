@@ -23,8 +23,7 @@ class PostController {
       return post
     }
     const post = await Post.query()
-      .where({ type: 'public' })
-      .orderBy('id', 'desc')
+      .where({ type: 'public' })    
       .with('subcategories')
       .fetch()
 

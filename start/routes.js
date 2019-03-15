@@ -31,6 +31,8 @@ Route.get('category', 'CategoryController.index').middleware(['auth'])
 Route.get('subcategory', 'SubCategoryController.index').middleware(['auth'])
 Route.get('post', 'PostController.index').middleware(['auth'])
 
+Route.get('users/show', 'UserController.show').middleware(['auth'])
+
 // Only admin
 Route.group(() => {
   Route.post('/files', 'FileController.store')
@@ -53,5 +55,5 @@ Route.group(() => {
 
   Route.resource('users', 'UserController')
     .apiOnly()
-    .except(['store'])
+    .except(['store', 'show'])       
 }).middleware(['auth', 'is:(administrator || moderator)'])

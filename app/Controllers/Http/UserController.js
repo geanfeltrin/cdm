@@ -61,6 +61,12 @@ class UserController {
     return user
   }
 
+  async show ({ auth }) {
+    const user = await auth.getUser()
+    console.log(user)
+    return user
+  }
+
   async destroy ({ params }) {
     const user = await User.findOrFail(params.id)
 
