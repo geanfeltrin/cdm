@@ -62,8 +62,7 @@ class UserController {
   }
 
   async show ({ auth }) {
-    const user = await auth.getUser()
-    console.log(user)
+    const user = await auth.getUser()    
     return user
   }
 

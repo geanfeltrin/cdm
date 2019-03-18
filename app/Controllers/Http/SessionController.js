@@ -5,7 +5,7 @@ class SessionController {
     const { email, password } = request.all()
 
     const token = await auth.attempt(email, password)
-    let user = await User.query().where('email', email).fetch()      
+    let user = await User.query().where('email', email).fetch()     
     return ({ token, user })
   }
 }
