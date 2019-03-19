@@ -4,11 +4,13 @@ const User = use('App/Models/User')
 
 class UserController {
   async index () {
+    
     const user = await User.query()
       .with('roles')
-      .with('permissions')
+      .with('permissions')      
       .fetch()
 
+//  const users = await User.query().paginate()
     return user
   }
 
@@ -43,6 +45,7 @@ class UserController {
       'permissions',
       'roles'
     ])
+   
     const user = await User.findOrFail(params.id)
 
     user.merge(data)
