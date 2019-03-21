@@ -55,5 +55,5 @@ Route.group(() => {
 
   Route.resource('users', 'UserController')
     .apiOnly()
-    .except(['store', 'show'])       
+    .except(['store', 'show'])
 }).middleware(['auth', 'is:(administrator || moderator)'])
