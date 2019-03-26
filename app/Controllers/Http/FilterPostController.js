@@ -9,6 +9,7 @@ class FilterPostController {
       .where("sub_category_id", "=", params.id)
       .with("subcategories")
       .with("file")
+      .orderBy("id", "desc")
       .fetch();
 
     return post;
