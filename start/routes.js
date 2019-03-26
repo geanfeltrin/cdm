@@ -31,6 +31,8 @@ Route.get("category", "CategoryController.index").middleware(["auth"]);
 Route.get("subcategory", "SubCategoryController.index").middleware(["auth"]);
 Route.get("post", "PostController.index").middleware(["auth"]);
 
+Route.get("home", "HomePostController.index").middleware(["auth"]);
+
 Route.get("users/show", "UserController.show").middleware(["auth"]);
 
 Route.get("filter/:id", "FilterPostController.show").middleware(["auth"]);
@@ -58,4 +60,8 @@ Route.group(() => {
   Route.resource("users", "UserController")
     .apiOnly()
     .except(["store", "show"]);
+
+  Route.resource("home", "HomePostController")
+    .apiOnly()
+    .except(["index", "show"]);
 }).middleware(["auth", "is:(administrator || moderator)"]);
