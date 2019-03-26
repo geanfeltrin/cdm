@@ -36,6 +36,7 @@ Route.get("home", "HomePostController.index").middleware(["auth"]);
 Route.get("users/show", "UserController.show").middleware(["auth"]);
 
 Route.get("filter/:id", "FilterPostController.show").middleware(["auth"]);
+Route.get("filter", "FilterPostController.index").middleware(["auth"]);
 
 // Only admin
 Route.group(() => {
