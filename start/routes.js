@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 /*
 |--------------------------------------------------------------------------
@@ -14,55 +14,56 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use("Route");
+const Route = use('Route')
 
-Route.post("users", "UserController.store");
+Route.post('users', 'UserController.store')
 
-Route.post("sessions", "SessionController.store");
-Route.get("sessions", "SessionController.index").middleware(["auth"]);
+Route.post('sessions', 'SessionController.store')
+Route.get('sessions', 'SessionController.index').middleware(['auth'])
 
-Route.post("passwords", "ForgotPasswordController.store");
-Route.put("passwords", "ForgotPasswordController.Update");
+Route.post('passwords', 'ForgotPasswordController.store')
+Route.put('passwords', 'ForgotPasswordController.Update')
 
-Route.get("/files/:id", "FileController.show");
+Route.get('/files/:id', 'FileController.show')
 
 // all
-Route.get("category", "CategoryController.index").middleware(["auth"]);
-Route.get("subcategory", "SubCategoryController.index").middleware(["auth"]);
-Route.get("post", "PostController.index").middleware(["auth"]);
+Route.get('category', 'CategoryController.index').middleware(['auth'])
+Route.get('subcategory', 'SubCategoryController.index').middleware(['auth'])
+Route.get('post', 'PostController.index').middleware(['auth'])
 
-Route.get("home", "HomePostController.index").middleware(["auth"]);
+Route.get('home', 'HomePostController.index').middleware(['auth'])
 
-Route.get("users/show", "UserController.show").middleware(["auth"]);
+Route.get('users/show', 'UserController.show').middleware(['auth'])
 
-Route.get("filter/:id", "FilterPostController.show").middleware(["auth"]);
-Route.get("filter", "FilterPostController.index").middleware(["auth"]);
+Route.get('filter/:id', 'FilterPostController.show').middleware(['auth'])
+Route.get('filter', 'FilterPostController.index').middleware(['auth'])
 
 // Only admin
 Route.group(() => {
-  Route.post("/files", "FileController.store");
-  Route.resource("/files", "FileController")
+  Route.post('/files', 'FileController.store')
+  Route.resource('/files', 'FileController')
     .apiOnly()
-    .except(["index", "show"]);
+    .except(['index', 'show'])
 
-  Route.resource("category", "CategoryController")
+  Route.resource('category', 'CategoryController')
     .apiOnly()
-    .except(["index", "show"]);
-  Route.resource("subcategory", "SubCategoryController")
+    .except(['index', 'show'])
+  Route.resource('subcategory', 'SubCategoryController')
     .apiOnly()
-    .except(["index", "show"]);
-  Route.resource("post", "PostController")
+    .except(['index', 'show'])
+  Route.resource('post', 'PostController')
     .apiOnly()
-    .except(["index", "show"]);
-  Route.resource("roles", "RoleController").apiOnly();
+    .except(['index', 'show'])
 
-  Route.resource("permissions", "PermissionController").apiOnly();
-
-  Route.resource("users", "UserController")
+  Route.resource('home', 'HomePostController')
     .apiOnly()
-    .except(["store", "show"]);
+    .except(['index', 'show'])
+}).middleware(['auth', 'is:(administrator || moderator)'])
 
-  Route.resource("home", "HomePostController")
-    .apiOnly()
-    .except(["index", "show"]);
-}).middleware(["auth", "is:(administrator || moderator)"]);
+Route.resource('roles', 'RoleController').apiOnly()
+
+Route.resource('permissions', 'PermissionController').apiOnly()
+
+Route.resource('users', 'UserController')
+  .apiOnly()
+  .except(['store', 'show'])

@@ -11,19 +11,22 @@ const path = require('path')
 const { promisify } = require('util')
 
 class PostController {
-  async index ({ auth }) {
+  async index ({ auth, request }) {
     const user = await auth.getUser()
+    let pagination = request.only(['page', 'limit'])
+    const page = parseInt(pagination.page, 10) || 1
+    const limit = parseInt(pagination.limit, 10) || 5
     if (user.is('administrator || moderator')) {
       const post = await Post.query()
         .orderBy('id', 'desc')
         .with('subcategories')
         .with('file')
-        .fetch()
+        .paginate(page, limit)
 
       return post
     }
     const post = await Post.query()
-      .where({ type: 'public' })    
+      .where({ type: 'public' })
       .with('subcategories')
       .fetch()
 
@@ -38,7 +41,8 @@ class PostController {
       'sub_category_id',
       'file_id',
       'imagem',
-      'type'
+      'type',
+      'featured'
     ])
 
     const post = await Post.create({ ...data, user_id: auth.user.id })
@@ -62,10 +66,18 @@ class PostController {
       'sub_category_id',
       'file_id',
       'imagem',
-      'type'
+      'type',
+      'featured'
     ])
-
     const post = await Post.findOrFail(params.id)
+
+    if (data.featured === true) {
+      const featured = await Post.query()
+        .where('featured', '=', 'true')
+        .update({ featured: false })
+
+      console.dir(featured)
+    }
 
     post.merge(data)
 
@@ -79,10 +91,8 @@ class PostController {
   async destroy ({ params, response }) {
     const post = await Post.findOrFail(params.id)
 
-    console.log(post.file_id)
     if (post.file_id) {
       const file = await File.findOrFail(post.file_id)
-      console.log('sadas', file.file)
       try {
         promisify(fs.unlink)(
           path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', file.file)
