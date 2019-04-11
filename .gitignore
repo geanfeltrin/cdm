@@ -9,3 +9,11 @@ tmp
 
 # The development sqlite file
 database/development.sqlite
+
+
+credentials.json
+
+token.json
+
+
+Cdm-teste-e1b2cb3277d8.json

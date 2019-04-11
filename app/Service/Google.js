@@ -94,3 +94,8 @@ function listFiles (auth) {
     }
   )
 }
+
+function UploadFiles (auth, file) {
+  const drive = google.drive({ version: 'v3', auth })
+  drive.files.upload
+}
