@@ -44,7 +44,7 @@ class PostController {
       'type',
       'featured'
     ])
-
+    console.dir(data)
     const post = await Post.create({ ...data, user_id: auth.user.id })
 
     await post.loadMany(['file', 'subcategories'])
@@ -75,8 +75,6 @@ class PostController {
       const featured = await Post.query()
         .where('featured', '=', 'true')
         .update({ featured: false })
-
-      console.dir(featured)
     }
 
     post.merge(data)
