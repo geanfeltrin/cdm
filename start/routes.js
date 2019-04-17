@@ -26,6 +26,8 @@ Route.put('passwords', 'ForgotPasswordController.Update')
 
 Route.get('/files/:id', 'FileController.show')
 
+Route.get('files', 'FileController.index')
+
 // all
 Route.get('category', 'CategoryController.index').middleware(['auth'])
 Route.get('subcategory', 'SubCategoryController.index').middleware(['auth'])
@@ -37,6 +39,10 @@ Route.get('users/show', 'UserController.show').middleware(['auth'])
 
 Route.get('filter/:id', 'FilterPostController.show').middleware(['auth'])
 Route.get('filter', 'FilterPostController.index').middleware(['auth'])
+
+Route.resource('roles', 'RoleController').apiOnly()
+
+Route.resource('permissions', 'PermissionController').apiOnly()
 
 // Only admin
 Route.group(() => {
@@ -59,10 +65,6 @@ Route.group(() => {
     .apiOnly()
     .except(['index', 'show'])
 }).middleware(['auth', 'is:(administrator || moderator)'])
-
-Route.resource('roles', 'RoleController').apiOnly()
-
-Route.resource('permissions', 'PermissionController').apiOnly()
 
 Route.resource('users', 'UserController')
   .apiOnly()
