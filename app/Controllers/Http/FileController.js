@@ -31,8 +31,6 @@ class FileController {
     try {
       if (!request.file('file')) return
 
-      const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024
-
       const upload = request.file('file', { size: '2mb' })
 
       const fileName = `${Date.now()}.${upload.subtype}`
@@ -45,26 +43,17 @@ class FileController {
         throw upload.error()
       }
 
-      if (upload.size < UPLOAD_FILE_SIZE_LIMIT) {
-        await fs.readFile(path.join(__dirname, 'upload'), 'utf8', function (
-          err,
-          contents
-        ) {
-          if (err) {
-            console.log('Error: ', err)
-          }
-
-          // This uploads basic.js to the root of your dropbox
-          dbx
-            .filesUpload({ path: '/' + fileName, contents: contents })
-            .then(function (response) {
-              console.log(response)
-            })
-            .catch(function (err) {
-              console.log(err)
-            })
+      await dbx
+        .filesUpload({
+          path: '/' + fileName,
+          contents: upload
         })
-      }
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
 
       const file = await File.create({
         file: fileName,
