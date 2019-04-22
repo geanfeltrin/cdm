@@ -28,6 +28,8 @@ Route.get('/files/:id', 'FileController.show')
 
 Route.get('files', 'FileController.index')
 
+Route.post('upload', 'UploadDropboxController.upload')
+
 // all
 Route.get('category', 'CategoryController.index').middleware(['auth'])
 Route.get('subcategory', 'SubCategoryController.index').middleware(['auth'])

@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
 const dbx = require('../../Service/dropBox')
+const Drive = use('Drive')
 
 /**
  * Resourceful controller for interacting with files
@@ -42,18 +43,6 @@ class FileController {
       if (!upload.moved()) {
         throw upload.error()
       }
-
-      await dbx
-        .filesUpload({
-          path: '/' + fileName,
-          contents: upload
-        })
-        .then(function (response) {
-          console.log(response)
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
 
       const file = await File.create({
         file: fileName,
