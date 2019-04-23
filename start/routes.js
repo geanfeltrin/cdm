@@ -28,7 +28,8 @@ Route.get('/files/:id', 'FileController.show')
 
 Route.get('files', 'FileController.index')
 
-Route.post('upload', 'UploadDropboxController.upload')
+Route.post('uploadthumbnail', 'UploadDropboxController.uploadThumbnail')
+Route.post('uploadfile', 'UploadDropboxController.uploadLink')
 
 // all
 Route.get('category', 'CategoryController.index').middleware(['auth'])

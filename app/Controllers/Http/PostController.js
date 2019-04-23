@@ -42,12 +42,19 @@ class PostController {
       'file_id',
       'imagem',
       'type',
-      'featured'
+      'featured',
+      'linkdbxdownload_id',
+      'linkdbxthumb_id'
     ])
     console.dir(data)
     const post = await Post.create({ ...data, user_id: auth.user.id })
 
-    await post.loadMany(['file', 'subcategories'])
+    await post.loadMany([
+      'file',
+      'subcategories',
+      'Linkdownloaddbx',
+      'Linkthumbdbx'
+    ])
 
     return post
   }
@@ -67,7 +74,9 @@ class PostController {
       'file_id',
       'imagem',
       'type',
-      'featured'
+      'featured',
+      'linkdbxdownload_id',
+      'linkdbxthumb_id'
     ])
     const post = await Post.findOrFail(params.id)
 

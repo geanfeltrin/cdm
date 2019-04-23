@@ -5,23 +5,11 @@ const Helpers = use('Helpers')
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
-const dbx = require('../../Service/dropBox')
-const Drive = use('Drive')
 
 /**
  * Resourceful controller for interacting with files
  */
 class FileController {
-  async index () {
-    dbx
-      .filesListFolder({ path: '' })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
   async show ({ params, response }) {
     const file = await File.findOrFail(params.id)
 
