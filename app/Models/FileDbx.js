@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class FileDbx extends Model {
+  static get table () {
+    return 'file_dbxes'
+  }
   posts () {
     return this.hasMany('App/Models/Post')
   }
