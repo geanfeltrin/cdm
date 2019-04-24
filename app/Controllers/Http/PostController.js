@@ -21,6 +21,8 @@ class PostController {
         .orderBy('id', 'desc')
         .with('subcategories')
         .with('file')
+        .with('filedbx')
+        .with('thumbnaildbx')
         .paginate(page, limit)
 
       return post
@@ -28,6 +30,8 @@ class PostController {
     const post = await Post.query()
       .where({ type: 'public' })
       .with('subcategories')
+      .with('filedbx')
+      .with('thumbnaildbx')
       .fetch()
 
     return post
@@ -43,18 +47,13 @@ class PostController {
       'imagem',
       'type',
       'featured',
-      'linkdbxdownload_id',
-      'linkdbxthumb_id'
+      'filedbx_id',
+      'thumbnaildbx_id'
     ])
     console.dir(data)
     const post = await Post.create({ ...data, user_id: auth.user.id })
 
-    await post.loadMany([
-      'file',
-      'subcategories',
-      'Linkdownloaddbx',
-      'Linkthumbdbx'
-    ])
+    await post.loadMany(['file', 'subcategories', 'filedbx', 'thumbnaildbx'])
 
     return post
   }
@@ -75,8 +74,8 @@ class PostController {
       'imagem',
       'type',
       'featured',
-      'linkdbxdownload_id',
-      'linkdbxthumb_id'
+      'filedbx_id',
+      'thumbnaildbx_id'
     ])
     const post = await Post.findOrFail(params.id)
 
@@ -90,7 +89,7 @@ class PostController {
 
     await post.save()
 
-    await post.loadMany(['file', 'subcategories'])
+    await post.loadMany(['file', 'subcategories', 'filedbx', 'thumbnaildbx'])
 
     return post
   }

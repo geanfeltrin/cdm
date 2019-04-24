@@ -18,6 +18,8 @@ class FilterPostController {
       .where('sub_category_id', '=', params.id)
       .with('subcategories')
       .with('file')
+      .with('linkdownloaddropbox')
+      .with('linkthumbdropbox')
       .orderBy('id', 'desc')
       .fetch()
     return post

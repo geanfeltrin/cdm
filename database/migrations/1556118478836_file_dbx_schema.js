@@ -3,9 +3,9 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class LinkdownloaddropboxSchema extends Schema {
+class FileDbxSchema extends Schema {
   up () {
-    this.create('linkdownloaddropboxes', table => {
+    this.create('file_dbxes', table => {
       table.increments()
       table.string('path')
       table.string('url')
@@ -14,8 +14,8 @@ class LinkdownloaddropboxSchema extends Schema {
   }
 
   down () {
-    this.drop('linkdownloaddropboxes')
+    this.drop('file_dbxes')
   }
 }
 
-module.exports = LinkdownloaddropboxSchema
+module.exports = FileDbxSchema

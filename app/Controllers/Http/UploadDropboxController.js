@@ -1,7 +1,7 @@
 'use strict'
 
-const LinkDownloadDbx = use('App/Models/Linkdownloaddbx')
-const LinkThumbDbx = use('App/Models/Linkthumbdbx')
+const LinkDownloadDbx = use('App/Models/linkdownloaddropbox')
+const LinkThumbDbx = use('App/Models/linkthumbdropbox')
 const Helpers = use('Helpers')
 const dbx = require('../../Service/dropBox')
 const Drive = use('Drive')
