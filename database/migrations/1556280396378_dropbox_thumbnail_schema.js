@@ -3,9 +3,9 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class ThumbnailDbxSchema extends Schema {
+class DropboxThumbnailSchema extends Schema {
   up () {
-    this.create('thumbnail_dbxes', table => {
+    this.create('dropbox_thumbnails', table => {
       table.increments()
       table.string('path')
       table.string('url')
@@ -14,8 +14,8 @@ class ThumbnailDbxSchema extends Schema {
   }
 
   down () {
-    this.drop('thumbnail_dbxes')
+    this.drop('dropbox_thumbnails')
   }
 }
 
-module.exports = ThumbnailDbxSchema
+module.exports = DropboxThumbnailSchema

@@ -1,6 +1,6 @@
 'use strict'
 
-const ThumbnailDbx = use('App/Models/ThumbnailDbx')
+const DropboxThumbnail = use('App/Models/DropboxThumbnail')
 const Helpers = use('Helpers')
 const dbx = require('../../Service/dropBox')
 const Drive = use('Drive')
@@ -35,7 +35,7 @@ class ThumbnailDbxController {
 
       const { url, path } = link
 
-      const file = await ThumbnailDbx.create({
+      const file = await DropboxThumbnail.create({
         url: url,
         path: path
       })

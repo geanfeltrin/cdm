@@ -1,6 +1,6 @@
 'use strict'
 
-const FileDbx = use('App/Models/FileDbx')
+const DropboxDownload = use('App/Models/DropboxDownload')
 const Helpers = use('Helpers')
 const dbx = require('../../Service/dropBox')
 const Drive = use('Drive')
@@ -35,7 +35,7 @@ class FileDbxController {
 
       const { url, path } = link
 
-      const file = await FileDbx.create({
+      const file = await DropboxDownload.create({
         url: url,
         path: path
       })

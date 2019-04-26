@@ -13,11 +13,11 @@ class Post extends Model {
   users () {
     return this.belongsTo('App/Models/User')
   }
-  filedbx () {
-    return this.belongsTo('App/Models/FileDbx')
+  DropboxDownload () {
+    return this.belongsTo('App/Models/DropboxDownload')
   }
-  thumbnaildbx () {
-    return this.belongsTo('App/Models/ThumbnailDbx')
+  DropboxThumbnail () {
+    return this.belongsTo('App/Models/DropboxThumbnail')
   }
 }
 
