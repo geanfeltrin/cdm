@@ -14,10 +14,10 @@ class Post extends Model {
     return this.belongsTo('App/Models/User')
   }
   DropboxDownload () {
-    return this.belongsTo('App/Models/DropboxDownload')
+    return this.belongsTo('App/Models/DropboxDownload', 'download_id')
   }
   DropboxThumbnail () {
-    return this.belongsTo('App/Models/DropboxThumbnail')
+    return this.belongsTo('App/Models/DropboxThumbnail', 'thumbnail_id')
   }
 }
 
