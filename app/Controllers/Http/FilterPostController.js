@@ -7,6 +7,8 @@ class FilterPostController {
       .orderBy('id', 'desc')
       .where('featured', '=', 'true')
       .with('file')
+      .with('DropboxDownload')
+      .with('DropboxThumbnail')
       .fetch()
 
     return post
@@ -18,8 +20,8 @@ class FilterPostController {
       .where('sub_category_id', '=', params.id)
       .with('subcategories')
       .with('file')
-      .with('linkdownloaddropbox')
-      .with('linkthumbdropbox')
+      .with('DropboxDownload')
+      .with('DropboxThumbnail')
       .orderBy('id', 'desc')
       .fetch()
     return post

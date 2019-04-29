@@ -35,8 +35,13 @@ class FileDbxController {
 
       const { url, path } = link
 
+      const correctUrl = url =>
+        url.substring(0, url.indexOf('?dl=0')).concat('?dl=1')
+
+      const newUrl = await correctUrl(url)
+
       const file = await DropboxDownload.create({
-        url: url,
+        url: newUrl,
         path: path
       })
       await Drive.delete(fileName)
