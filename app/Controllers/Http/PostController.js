@@ -14,7 +14,7 @@ class PostController {
   async index ({ auth, request }) {
     const user = await auth.getUser()
     let pagination = request.only(['page', 'limit'])
-    const page = parseInt(pagination.page, 10) || 1
+    const page = parseInt(pagination.page, 10) || 16
     const limit = parseInt(pagination.limit, 20) || 10
     if (user.is('administrator || moderator')) {
       const post = await Post.query()
@@ -85,7 +85,7 @@ class PostController {
     const post = await Post.findOrFail(params.id)
 
     if (data.featured === true) {
-      const featured = await Post.query()
+      await Post.query()
         .where('featured', '=', 'true')
         .update({ featured: false })
     }
