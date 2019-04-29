@@ -29,7 +29,10 @@ Route.get('/files/:id', 'FileController.show')
 Route.get('files', 'FileController.index')
 
 Route.post('uploadthumbnail', 'ThumbnailDbxController.store')
+Route.delete('uploadthumbnail/:id', 'ThumbnailDbxController.destroy')
+
 Route.post('uploadfile', 'FileDbxController.store')
+Route.delete('uploadfile/:id', 'FileDbxController.destroy')
 
 // all
 Route.get('category', 'CategoryController.index').middleware(['auth'])

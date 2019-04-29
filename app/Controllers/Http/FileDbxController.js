@@ -48,7 +48,17 @@ class FileDbxController {
 
   async update ({ params, request, response }) {}
 
-  async destroy ({ params, request, response }) {}
+  async destroy ({ params, request, response }) {
+    try {
+      const file = await DropboxDownload.findOrFail(params.id)
+
+      await dbx.filesDelete({ path: file.path })
+
+      await file.delete()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 module.exports = FileDbxController

@@ -6,6 +6,9 @@
 
 const Post = use('App/Models/Post')
 const File = use('App/Models/File')
+const DropboxThumbnail = use('App/Models/DropboxThumbnail')
+const DropboxDownload = use('App/Models/DropboxDownload')
+const dbx = require('../../Service/dropBox')
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
@@ -119,6 +122,33 @@ class PostController {
         return response
           .status(error.status)
           .send({ error: { message: 'Erro ao delatar o arquivo' } })
+      }
+    }
+    if (post.download_id) {
+      try {
+        const file = await DropboxDownload.findOrFail(post.download_id)
+
+        await dbx.filesDelete({ path: file.path })
+
+        await file.delete()
+      } catch (error) {
+        return response
+          .status(error.status)
+          .send({ error: { message: 'Erro ao delatar o arquivo no Dropbox' } })
+      }
+    }
+
+    if (post.thumbnail_id) {
+      try {
+        const file = await DropboxThumbnail.findOrFail(post.thumbnail_id)
+
+        await dbx.filesDelete({ path: file.path })
+
+        await file.delete()
+      } catch (error) {
+        return response
+          .status(error.status)
+          .send({ error: { message: 'Erro ao delatar o arquivo no Dropbox' } })
       }
     }
     await post.delete()
