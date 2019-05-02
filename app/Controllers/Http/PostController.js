@@ -6,8 +6,8 @@
 
 const Post = use('App/Models/Post')
 const File = use('App/Models/File')
-const DropboxThumbnail = use('App/Models/DropboxThumbnail')
-const DropboxDownload = use('App/Models/DropboxDownload')
+const dropboxThumbnail = use('App/Models/DropboxThumbnail')
+const dropboxDownload = use('App/Models/DropboxDownload')
 const dbx = require('../../Service/dropBox')
 const fs = require('fs')
 const path = require('path')
@@ -24,8 +24,8 @@ class PostController {
         .orderBy('id', 'desc')
         .with('subcategories')
         .with('file')
-        .with('DropboxDownload')
-        .with('DropboxThumbnail')
+        .with('dropboxDownload')
+        .with('dropboxThumbnail')
         .paginate(page, limit)
 
       return post
@@ -33,8 +33,8 @@ class PostController {
     const post = await Post.query()
       .where({ type: 'public' })
       .with('subcategories')
-      .with('DropboxDownload')
-      .with('DropboxThumbnail')
+      .with('dropboxDownload')
+      .with('dropboxThumbnail')
       .fetch()
 
     return post
@@ -59,8 +59,8 @@ class PostController {
     await post.loadMany([
       'file',
       'subcategories',
-      'DropboxDownload',
-      'DropboxThumbnail'
+      'dropboxDownload',
+      'dropboxThumbnail'
     ])
 
     return post
@@ -100,8 +100,8 @@ class PostController {
     await post.loadMany([
       'file',
       'subcategories',
-      'DropboxDownload',
-      'DropboxThumbnail'
+      'dropboxDownload',
+      'dropboxThumbnail'
     ])
 
     return post
@@ -126,7 +126,7 @@ class PostController {
     }
     if (post.download_id) {
       try {
-        const file = await DropboxDownload.findOrFail(post.download_id)
+        const file = await dropboxDownload.findOrFail(post.download_id)
 
         await dbx.filesDelete({ path: file.path })
 
@@ -140,7 +140,7 @@ class PostController {
 
     if (post.thumbnail_id) {
       try {
-        const file = await DropboxThumbnail.findOrFail(post.thumbnail_id)
+        const file = await dropboxThumbnail.findOrFail(post.thumbnail_id)
 
         await dbx.filesDelete({ path: file.path })
 

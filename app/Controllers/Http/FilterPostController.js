@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 'use strict'
 const Post = use('App/Models/Post')
 
@@ -7,23 +8,32 @@ class FilterPostController {
       .orderBy('id', 'desc')
       .where('featured', '=', 'true')
       .with('file')
-      .with('DropboxDownload')
-      .with('DropboxThumbnail')
+      .with('dropboxDownload')
+      .with('dropboxThumbnail')
       .fetch()
 
     return post
   }
-  async show ({ params }) {
-    const data = Post.findOrFail('sub_category_id', params.id)
+  async filter ({ params, request }) {
+    const title = request.input('title')
+    const id = request.input('id')
+    const query = Post.query()
 
-    const post = await Post.query()
-      .where('sub_category_id', '=', `${params.id}`)
+    if (title) {
+      query.where('title', 'ILIKE', `%${title}%`)
+    }
+    if (id) {
+      query.where('sub_category_id', '=', id)
+    }
+
+    const post = await query
       .with('subcategories')
       .with('file')
-      .with('DropboxDownload')
-      .with('DropboxThumbnail')
+      .with('dropboxDownload')
+      .with('dropboxThumbnail')
       .orderBy('id', 'desc')
       .fetch()
+
     return post
   }
 
