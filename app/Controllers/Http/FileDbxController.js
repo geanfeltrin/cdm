@@ -12,7 +12,7 @@ class FileDbxController {
     try {
       const upload = request.file('file', { size: '100mb' })
 
-      const fileName = `${Date.now()}.${upload.subtype}`
+      const fileName = `${Date.now()}.${upload.extname}`
 
       await upload.move(Helpers.tmpPath('uploads'), {
         name: fileName
