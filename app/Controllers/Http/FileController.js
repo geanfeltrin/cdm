@@ -38,6 +38,7 @@ class FileController {
         type: upload.type,
         subtype: upload.subtype
       })
+      console.log(file)
 
       return file
     } catch (error) {
