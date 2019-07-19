@@ -19,30 +19,6 @@ class PostController {
     let pagination = request.only(['page', 'limit'])
     const page = parseInt(pagination.page, 10) || 16
     const limit = parseInt(pagination.limit, 20) || 10
-    const roles = await user.getRoles()
-    console.log(roles)
-    if (roles[0] === 'polob') {
-      const post = await Post.query()
-        .where({ type: 'public' })
-        .orWhere({ type: 'exclusiveB' })
-        .with('subcategories')
-        .with('dropboxDownload')
-        .with('dropboxThumbnail')
-        .fetch()
-
-      return post
-    }
-    if (roles[0] === 'polo') {
-      const post = await Post.query()
-        .where({ type: 'public' })
-        .orWhere({ type: 'exclusiveA' })
-        .with('subcategories')
-        .with('dropboxDownload')
-        .with('dropboxThumbnail')
-        .fetch()
-      console.log('foi A')
-      return post
-    }
 
     if (user.is('administrator || moderator')) {
       const post = await Post.query()
