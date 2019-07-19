@@ -29,11 +29,8 @@
     "@adonisjs/lucid-slugify": "^1.0.3",
     "@adonisjs/mail": "^3.0.9",
     "adonis-acl": "^1.1.1",
-    "connected-react-router": "^6.2.2",
     "dropbox": "^4.0.17",
     "es6-promise": "^4.2.6",
-    "googleapis": "^27.0.0",
-    "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.23.0",
     "pg": "^7.10.0"
