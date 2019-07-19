@@ -19,6 +19,7 @@ class PostController {
     let pagination = request.only(['page', 'limit'])
     const page = parseInt(pagination.page, 10) || 16
     const limit = parseInt(pagination.limit, 20) || 10
+
     if (user.is('administrator || moderator')) {
       const post = await Post.query()
         .orderBy('id', 'desc')
