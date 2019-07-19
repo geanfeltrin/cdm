@@ -20,6 +20,21 @@ class FilterPostController {
 
       return post
     }
+
+    if (roles[0] === 'polo') {
+      const post = await Post.query()
+        .where({ type: 'public' })
+        .orWhere({ type: 'exclusiveA' })
+        .where('featured', '=', 'true')
+        .with('subcategories')
+        .with('file')
+        .with('dropboxDownload')
+        .with('dropboxThumbnail')
+        .orderBy('id', 'desc')
+        .fetch()
+
+      return post
+    }
     const post = await Post.query()
       .orderBy('id', 'desc')
       .where('featured', '=', 'true')

@@ -88,11 +88,11 @@ class PostController {
     ])
     const post = await Post.findOrFail(params.id)
 
-    if (data.featured === true) {
-      await Post.query()
-        .where('featured', '=', 'true')
-        .update({ featured: false })
-    }
+    // if (data.featured === true) {
+    //   await Post.query()
+    //     .where('featured', '=', 'true')
+    //     .update({ featured: false })
+    // }
 
     post.merge(data)
 
