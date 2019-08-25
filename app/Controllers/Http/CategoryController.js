@@ -4,7 +4,9 @@ const Category = use('App/Models/Category')
 
 class CategoryController {
   async index () {
-    const category = await Category.query().with('subCategories').fetch()
+    const category = await Category.query()
+      .with('subCategories')
+      .fetch()
 
     return category
   }
@@ -13,6 +15,14 @@ class CategoryController {
     const data = request.only(['name', 'slug', 'description'])
 
     const category = await Category.create(data)
+
+    return category
+  }
+
+  async show ({ params }) {
+    const category = await Category.findOrFail(params.id)
+
+    await category.load('subCategories')
 
     return category
   }

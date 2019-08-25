@@ -43,7 +43,9 @@ Route.delete(
   'DropboxThumbnailController.destroy'
 ).middleware(['auth'])
 
-Route.post('uploadfile', 'DropboxDownloadController.store').middleware(['auth'])
+Route.post('uploadfile', 'DropboxDownloadController.store').middleware([
+  'auth'
+])
 Route.delete('uploadfile/:id', 'DropboxDownloadController.destroy').middleware([
   'auth'
 ])
@@ -57,7 +59,7 @@ Route.group(() => {
 
   Route.resource('category', 'CategoryController')
     .apiOnly()
-    .except(['index', 'show'])
+    .except(['index'])
   Route.resource('subcategory', 'SubCategoryController')
     .apiOnly()
     .except(['index', 'show'])
